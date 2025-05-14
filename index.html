@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web导航 - 一站式开发者资源平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #5E72E4;
+            --secondary-color: #8392AB;
+            --accent-color: #FB6340;
+            --light-bg: #F8F9FE;
+            --dark-bg: #172B4D;
+            --text-color: #344767;
+            --light-text: #8392AB;
+            --card-shadow: 0 7px 14px 0 rgba(65, 69, 88, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
+            --hover-shadow: 0 10px 20px 0 rgba(65, 69, 88, 0.15), 0 5px 10px 0 rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 6px 12px;
+            border-radius: 6px;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Search */
+        .search-container {
+            margin: 30px auto;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+        }
+
+        .search-box:focus {
+            outline: none;
+            box-shadow: var(--hover-shadow);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary-color);
+        }
+
+        /* Section Styles */
+        .section {
+            margin: 40px 0;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(131, 146, 171, 0.2);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--dark-bg);
+            margin-right: 10px;
+        }
+
+        .section-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            color: white;
+        }
+
+        .resource-icon {
+            background-color: #3498db;
+        }
+
+        .research-icon {
+            background-color: #2ecc71;
+        }
+
+        .analysis-icon {
+            background-color: #9b59b6;
+        }
+
+        .tools-icon {
+            background-color: #e74c3c;
+        }
+
+        .templates-icon {
+            background-color: #1abc9c;
+        }
+
+        /* Card Grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            transition: var(--transition);
+            box-shadow: var(--card-shadow);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .card-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--dark-bg);
+        }
+
+        .card-content {
+            font-size: 14px;
+            color: var(--light-text);
+            flex-grow: 1;
+            margin-bottom: 12px;
+        }
+
+        .card-link {
+            color: var(--primary-color);
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: auto;
+        }
+
+        .card-link i {
+            transition: var(--transition);
+        }
+
+        .card:hover .card-link i {
+            transform: translateX(4px);
+        }
+
+        /* Colors for icons */
+        .reddit { background-color: #FF4500; }
+        .hacker { background-color: #00b265; }
+        .google { background-color: #4285F4; }
+        .sem { background-color: #5343c2; }
+        .ahrefs { background-color: #ff492c; }
+        .ai-tool { background-color: #7b68ee; }
+        .template { background-color: #00bfa5; }
+        .domain { background-color: #ffb900; }
+
+        /* Footer */
+        footer {
+            background-color: white;
+            padding: 30px 0;
+            margin-top: 60px;
+            border-top: 1px solid rgba(131, 146, 171, 0.2);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: var(--secondary-color);
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .copyright {
+            color: var(--light-text);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .card-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-inner {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-inner">
+            <div class="logo">Web导航</div>
+            <div class="nav-links">
+                <a href="#resources">泛资讯</a>
+                <a href="#research">需求调研</a>
+                <a href="#analysis">网站分析</a>
+                <a href="#tools">搜索工具</a>
+                <a href="#templates">网站模板</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="搜索资源...">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+
+        <!-- 泛资讯 Section -->
+        <section id="resources" class="section">
+            <div class="section-header">
+                <div class="section-icon resource-icon">
+                    <i class="fas fa-newspaper"></i>
+                </div>
+                <h2 class="section-title">泛资讯</h2>
+            </div>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon reddit">
+                            <i class="fab fa-reddit-alien"></i>
+                        </div>
+                        <h3 class="card-title">Reddit 子社区</h3>
+                    </div>
+                    <p class="card-content">全球最大的社区论坛网站，用户生成的内容</p>
+                    <a href="https://reddit.com" class="card-link">
+                        访问网站 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon hacker">
+                            <i class="fas fa-terminal"></i>
+                        </div>
+                        <h3 class="card-title">Indie Hackers</h3>
+                    </div>
+                    <p class="card-content">独立开发者和创业者交流的网站</p>
+                    <a href="https://www.indiehackers.com/" class="card-link">
+                        访问网站 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon hacker">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3 class="card-title">Hacker News</h3>
+                    </div>
+                    <p class="card-content">Y Combinator运营的科技创业者的社区</p>
+                    <a href="https://news.ycombinator.com/" class="card-link">
+                        访问网站 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon google">
+                            <i class="fab fa-google"></i>
+                        </div>
+                        <h3 class="card-title">Google 搜索中心</h3>
+                    </div>
+                    <p class="card-content">Google官方提供的搜索引擎优化指南和资源</p>
+                    <a href="https://developers.google.com/search" class="card-link">
+                        访问网站 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 需求调研 Section -->
+        <section id="research" class="section">
+            <div class="section-header">
+                <div class="section-icon research-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h2 class="section-title">需求调研</h2>
+            </div>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon google">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h3 class="card-title">Google Trends</h3>
+                    </div>
+                    <p class="card-content">分析关键词搜索趋势和热门话题的工具</p>
+                    <a href="https://trends.google.com/" class="card-link">
+                        访问网站 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon sem">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3 class="card-title">SearchSuggest</h3>
+                    </div>
+                    <p class="card-content">挖掘搜索引擎用户搜索全部字符关键词的工具</p>
+                    <a href="https://searchsuggest.io/" class="card-link">
+                        访问网站 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon ai-tool">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3 class="card-title">AI工具调查</h3>
+                    </div>
+                    <p class="card-content">详细分析AI趋势和市场深度参与度与最值得的投资资源</p>
+                    <a href="#" class="card-link">
+                        访问网站 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon ahrefs">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <h3 class="card-title">Keyword Difficulty Checker</h3>
+                    </div>
+                    <p class="card-content">评估关键词竞争难度和搜索量的专业SEO工具</p>
+                    <a href="https://ahrefs.com/keyword-difficulty" class="card-link">
+                        访问网站 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 网站分析 Section -->
+        <section id="analysis" class="section">
+            <div class="section-header">
+                <div class="section-icon analysis-icon">
+                    <i class="fas fa-chart-pie"></i>
+                </div>
+                <h2 class="section-title">网站分析</h2>
+            </div>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon sem">
+                            <i class="fas fa-analytics"></i>
+                        </div>
+                        <h3 class="card-title">SEMrush</h3>
+                    </div>
+                    <p class="card-content">全能的SEO工具套件，提供竞争分析和关键词、关键指标和市场调研</p>
+                    <a href="https://www.semrush.com/" class="card-link">
+                        访问网站 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon ahrefs">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <h3 class="card-title">Ahrefs</h3>
+                    </div>
+                    <p class="card-content">专业SEO工具，覆盖网站竞争分析和链接的完整分析报告</p>
+                    <a href="https://ahrefs.com/" class="card-link">
+                        访问网站 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon google">
+                            <i class="fas fa-chart-area"></i>
+                        </div>
+                        <h3 class="card-title">Google Analytics</h3>
+                    </div>
+                    <p class="card-content">谷歌官方免费网站分析工具，提供详细的流量数据和用户行为分析</p>
+                    <a href="https://analytics.google.com/" class="card-link">
+                        访问网站 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon sem">
+                            <i class="fas fa-microscope"></i>
+                        </div>
+                        <h3 class="card-title">SimilarWeb</h3>
+                    </div>
+                    <p class="card-content">网站流量分析平台，提供竞争对手的网站流量和行为数据</p>
+                    <a href="https://www.similarweb.com/" class="card-link">
+                        访问网站 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 搜索引擎工具 Section -->
+        <section id="tools" class="section">
+            <div class="section-header">
+                <div class="section-icon tools-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <h2 class="section-title">搜索引擎工具</h2>
+            </div>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon google">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                        <h3 class="card-title">Google Search Console</h3>
+                    </div>
+                    <p class="card-content">监控网站在谷歌搜索中表现的官方工具，提供关键词和网页引流数据</p>
+                    <a href="https://search.google.com/search-console" class="card-link">
+                        访问网站 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon sem">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3 class="card-title">Instant Domain Search</h3>
+                    </div>
+                    <p class="card-content">实时域名可用性检查工具，快速找到可注册的域名资源</p>
+                    <a href="https://instantdomainsearch.com/" class="card-link">
+                        访问网站 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon ahrefs">
+                            <i class="fas fa-search-dollar"></i>
+                        </div>
+                        <h3 class="card-title">Free SEO Tools</h3>
+                    </div>
+                    <p class="card-content">Ahrefs提供的免费SEO工具集，包含关键词生成器和SERP检查等实用功能</p>
+                    <a href="https://ahrefs.com/free-seo-tools" class="card-link">
+                        访问网站 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon sem">
+                            <i class="fas fa-sitemap"></i>
+                        </div>
+                        <h3 class="card-title">Bing Webmaster</h3>
+                    </div>
+                    <p class="card-content">微软提供的网站管理工具，优化在Bing上的搜索引擎表现</p>
+                    <a href="https://www.bing.com/webmasters/" class="card-link">
+                        访问网站 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 网站模板 Section -->
+        <section id="templates" class="section">
+            <div class="section-header">
+                <div class="section-icon templates-icon">
+                    <i class="fas fa-copy"></i>
+                </div>
+                <h2 class="section-title">网站模板</h2>
+            </div>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon template">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <h3 class="card-title">Vercel Templates</h3>
+                    </div>
+                    <p class="card-content">Vercel官方提供的高质量网站和应用模板集</p>
+                    <a href="https://vercel.com/templates" class="card-link">
+                        访问网站 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon template">
+                            <i class="fab fa-react"></i>
+                        </div>
+                        <h3 class="card-title">Next.js模板</h3>
+                    </div>
+                    <p class="card-content">基于Next.js的动态网站模板，适合现代Web开发</p>
+                    <a href="https://nextjs.org/examples" class="card-link">
+                        访问网站 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon template">
+                            <i class="fab fa-vuejs"></i>
+                        </div>
+                        <h3 class="card-title">Vue UI解决方案</h3>
+                    </div>
+                    <p class="card-content">一款基于Vue 3的UI组件库，构建现代化前端界面</p>
+                    <a href="https://vuejs.org/examples/" class="card-link">
+                        访问网站 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon ai-tool">
+                            <i class="fas fa-magic"></i>
+                        </div>
+                        <h3 class="card-title">AI生成网站模板</h3>
+                    </div>
+                    <p class="card-content">基于AI技术自动生成符合您需求的网站模板</p>
+                    <a href="#" class="card-link">
+                        访问网站 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 上站必备 Section -->
+        <section id="essentials" class="section">
+            <div class="section-header">
+                <div class="section-icon domain">
+                    <i class="fas fa-server"></i>
+                </div>
+                <h2 class="section-title">上站必备</h2>
+            </div>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon domain">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3 class="card-title">域名查询</h3>
+                    </div>
+                    <p class="card-content">提供多种域名查询和可用性检查工具</p>
+                    <a href="https://leandomainsearch.com/" class="card-link">
+                        域名资源 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon template">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <h3 class="card-title">Web-UI</h3>
+                    </div>
+                    <p class="card-content">一键部署你自己的工具目录的开源Web-UI</p>
+                    <a href="https://github.com/667/ai1api-ui-webui" class="card-link">
+                        访问网站 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon ai-tool">
+                            <i class="fas fa-map"></i>
+                        </div>
+                        <h3 class="card-title">第三方GPTs商店</h3>
+                    </div>
+                    <p class="card-content">提供大量预制GPT模型的集成应用平台</p>
+                    <a href="https://github.com/all-in-aigc/gpts-works" class="card-link">
+                        访问网站 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon domain">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3 class="card-title">OpenAI</h3>
+                    </div>
+                    <p class="card-content">人工智能领域最前沿的技术和研究</p>
+                    <a href="https://openai.com/" class="card-link">
+                        访问网站 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="copyright">© 2023 Web导航 - 一站式开发者资源平台</div>
+            <div class="footer-links">
+                <a href="#">关于我们</a>
+                <a href="#">联系方式</a>
+                <a href="#">建议反馈</a>
+                <a href="#">隐私政策</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 简单的搜索功能
+        document.querySelector('.search-box').addEventListener('keyup', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+            
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase();
+                const content = card.querySelector('.card-content').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || content.includes(searchTerm)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
